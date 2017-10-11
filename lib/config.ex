@@ -1,4 +1,4 @@
-defmodule Surgex.Config do
+defmodule Confix do
   @moduledoc """
   Application config getter, aka. `Application.get_env` on steroids.
 
@@ -6,19 +6,19 @@ defmodule Surgex.Config do
   system env vars on environments like Heroku. This convention is further extended here to allow
   type casting and falling back to defaults in such tuples.
 
-  Configs are assumed to live in app-specific parent scope, which is by default set to `:surgex`,
+  Configs are assumed to live in app-specific parent scope, which is by default set to `:confix`,
   but should be set to actual application name. Then, all Mix configs that will be fetched via
-  `Surgex.Config` should be nested in that scope.
+  `Confix` should be nested in that scope.
 
-  Check out `Surgex.Config.Patch` for an automated solution that allows to patch any Mix config with
+  Check out `Confix.Patch` for an automated solution that allows to patch any Mix config with
   the capabilities of this module.
 
   ## Usage
 
   Here's how your `prod.exs` may look:
 
-      config :surgex,
-        config_app_name: :my_project
+      config :confix,
+        base_app: :my_project
 
       config :my_project,
         pool_size: {:system, "POOL_SIZE", :integer, 5},
@@ -35,16 +35,16 @@ defmodule Surgex.Config do
   Having that, you can use either `get/1` or `get/2` to get specific config values in all envs.
   """
 
-  @app_name Application.get_env(:surgex, :config_app_name, :surgex)
+  @app_name Application.get_env(:confix, :base_app, :confix)
 
   @doc """
   Gets the config value for specified scope and key.
 
   ## Examples
 
-      iex> Mix.Config.persist(surgex: [api: [url: "example.com"]])
-      [:surgex]
-      iex> Surgex.Config.get(:api, :url)
+      iex> Mix.Config.persist(confix: [api: [url: "example.com"]])
+      [:confix]
+      iex> Confix.get(:api, :url)
       "example.com"
 
   """
@@ -59,9 +59,9 @@ defmodule Surgex.Config do
 
   ## Examples
 
-      iex> Mix.Config.persist(surgex: [feature_enabled: true])
-      [:surgex]
-      iex> Surgex.Config.get(:feature_enabled)
+      iex> Mix.Config.persist(confix: [feature_enabled: true])
+      [:confix]
+      iex> Confix.get(:feature_enabled)
       true
 
   """
@@ -79,11 +79,11 @@ defmodule Surgex.Config do
 
   ## Examples
 
-      iex> Surgex.Config.parse("value")
+      iex> Confix.parse("value")
       "value"
-      iex> Surgex.Config.parse({:system, "NON_EXISTING_ENV_VAR"})
+      iex> Confix.parse({:system, "NON_EXISTING_ENV_VAR"})
       nil
-      iex> Surgex.Config.parse({:system, "NON_EXISTING_ENV_VAR", "default value"})
+      iex> Confix.parse({:system, "NON_EXISTING_ENV_VAR", "default value"})
       "default value"
 
   """

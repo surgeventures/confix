@@ -1,13 +1,13 @@
-defmodule Surgex.Config.PatchTest do
+defmodule Confix.PatchTest do
   use ExUnit.Case
   import ExUnit.CaptureLog
   alias Mix.Config
-  alias Surgex.Config.Patch
+  alias Confix.Patch
 
   describe "init/0" do
     test "patch enabled" do
-      Config.persist(surgex: [
-        config_patch: [
+      Config.persist(confix: [
+        patch: [
           some_app: [some_key: {:system, "SOME_APP_VAR"}],
           other_app: [some_key: "value"],
           another_app: [some_key: {:system, "ANOTHER_APP_VAR_1"},
