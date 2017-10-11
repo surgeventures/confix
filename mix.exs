@@ -32,7 +32,7 @@ defmodule Confix.Mixfile do
        "GitHub" => "https://github.com/surgeventures/confix",
        "Shedul" => "https://www.shedul.com"
      },
-     files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md)]
+     files: ~w(mix.exs lib LICENSE.md README.md)]
   end
 
   def application do
