@@ -35,8 +35,6 @@ defmodule Confix do
   Having that, you can use either `get/1` or `get/2` to get specific config values in all envs.
   """
 
-  @app_name Application.get_env(:confix, :base_app, :confix)
-
   @doc """
   Gets the config value for specified scope and key.
 
@@ -49,7 +47,7 @@ defmodule Confix do
 
   """
   def get(scope, key) do
-    @app_name
+    get_app_name()
     |> Application.get_env(scope, [])
     |> Keyword.fetch(key)
     |> parse_fetch
@@ -66,9 +64,13 @@ defmodule Confix do
 
   """
   def get(key) do
-    @app_name
+    get_app_name()
     |> Application.fetch_env(key)
     |> parse_fetch
+  end
+
+  defp get_app_name do
+    Application.get_env(:confix, :base_app, Mix.Project.config[:app])
   end
 
   defp parse_fetch({:ok, value}), do: parse(value)
