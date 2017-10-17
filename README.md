@@ -1,6 +1,6 @@
 # Confix
 
-***Application config getter and fixer aka. Mix config on steroids***
+***Read, parse and patch Elixir application's configuration***
 
 Features:
 

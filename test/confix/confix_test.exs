@@ -6,11 +6,13 @@ defmodule ConfixTest do
     test "gets flat config" do
       assert Confix.get(:flat_config_key) == "flat value"
     end
+  end
 
+  describe "get_in/2" do
     test "gets nested config" do
-      assert Confix.get(:config_test, :filled_key) == "filled value"
-      assert Confix.get(:config_test, :system_key_without_default) == nil
-      assert Confix.get(:config_test, :system_key_with_default) == "default value"
+      assert Confix.get_in([:config_test, :filled_key]) == "filled value"
+      assert Confix.get_in([:config_test, :system_key_without_default]) == nil
+      assert Confix.get_in([:config_test, :system_key_with_default]) == "default value"
     end
   end
 
