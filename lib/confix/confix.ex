@@ -170,7 +170,7 @@ defmodule Confix do
   Same as `get_in/2` but raises `Confix.KeyError` if config is missing.
   """
   def get_in!(keys, opts \\ []) do
-    get_in(keys, opts) || raise(KeyError, key_or_keys: keys)
+    __MODULE__.get_in(keys, opts) || raise(KeyError, key_or_keys: keys)
   end
 
   @doc """

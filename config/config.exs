@@ -3,6 +3,12 @@ use Mix.Config
 if Mix.env == :test do
   config :logger, level: :info
 
+ config :confix, ConfixTest.ConfixTestMod,
+    key: :value,
+    nest_key: [
+      nest_value: :deep_value
+    ]
+
   config :confix, :config_test,
     filled_key: "filled value",
     system_key_without_default: {:system, "NON_EXISTING_ENV_VAR"},

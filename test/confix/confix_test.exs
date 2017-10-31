@@ -1,10 +1,37 @@
 defmodule ConfixTest do
   use ExUnit.Case
-  alias Confix
+  alias Confix.KeyError
+
+  describe "__using__/1" do
+    test "defines config helpers" do
+      defmodule ConfixTestMod do
+        use Confix
+      end
+
+      assert ConfixTestMod.config(:key) == :value
+      assert ConfixTestMod.config([:nest_key, :nest_value]) == :deep_value
+
+      assert_raise KeyError, fn ->
+        ConfixTestMod.config!([:nest_key, :missing_nest_value])
+      end
+    end
+  end
 
   describe "get/2" do
     test "gets flat config" do
       assert Confix.get(:flat_config_key) == "flat value"
+    end
+  end
+
+  describe "get!/2" do
+    test "gets flat config" do
+      assert Confix.get!(:flat_config_key) == "flat value"
+    end
+
+    test "raises for nil" do
+      assert_raise KeyError, fn ->
+        Confix.get!(:flat_config_key_missing)
+      end
     end
   end
 
@@ -13,6 +40,19 @@ defmodule ConfixTest do
       assert Confix.get_in([:config_test, :filled_key]) == "filled value"
       assert Confix.get_in([:config_test, :system_key_without_default]) == nil
       assert Confix.get_in([:config_test, :system_key_with_default]) == "default value"
+    end
+  end
+
+  describe "get_in!/2" do
+    test "gets nested config" do
+      assert Confix.get_in!([:config_test, :filled_key]) == "filled value"
+      assert Confix.get_in!([:config_test, :system_key_with_default]) == "default value"
+    end
+
+    test "raises for nil" do
+      assert_raise KeyError, fn ->
+        Confix.get_in!([:config_test, :system_key_without_default])
+      end
     end
   end
 

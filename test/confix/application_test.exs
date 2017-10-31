@@ -21,7 +21,7 @@ defmodule Confix.PatchTest do
         Confix.Application.init(nil)
       end)
 
-      assert Application.get_all_env(:sample_external_app) == [
+      assert Enum.sort(Application.get_all_env(:sample_external_app)) == [
         other_key: [deep_key: "other var"],
         some_key: "some var"
       ]
@@ -44,7 +44,7 @@ defmodule Confix.PatchTest do
         Confix.Application.init(nil)
       end)
 
-      assert Application.get_all_env(:sample_external_app) == [
+      assert Enum.sort(Application.get_all_env(:sample_external_app)) == [
         other_key: [deep_key: {:system, "OTHER_VAR"}],
         some_key: "some var"
       ]
@@ -68,7 +68,7 @@ defmodule Confix.PatchTest do
         Confix.Application.init(nil)
       end)
 
-      assert Application.get_all_env(:sample_external_app) == [
+      assert Enum.sort(Application.get_all_env(:sample_external_app)) == [
         other_key: [deep_key: "other var", deep_key_2: {:system, "OTHER_VAR"}],
         some_key: {:system, "SOME_VAR"}
       ]
