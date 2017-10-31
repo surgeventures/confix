@@ -18,7 +18,7 @@ defmodule Confix.Mixfile do
        "coveralls.detail": :test,
        "coveralls.html": :test],
      name: "Confix",
-     description: "Application config getter and fixer aka. Mix config on steroids",
+     description: "Read, parse and patch Elixir application's configuration",
      source_url: "https://github.com/surgeventures/confix",
      homepage_url: "https://github.com/surgeventures/confix",
      docs: [main: "readme",
