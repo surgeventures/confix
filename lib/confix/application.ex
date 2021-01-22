@@ -52,23 +52,25 @@ defmodule Confix.Application do
   defp apply([app]) do
     keys =
       app
-      |> Application.get_all_env
-      |> Keyword.keys
+      |> Application.get_all_env()
+      |> Keyword.keys()
 
     Enum.each(keys, &apply([app, &1]))
   end
+
   defp apply([app, key]) do
     new =
       app
       |> Application.get_env(key, [])
-      |> Confix.parse_deep
+      |> Confix.parse_deep()
 
-    Logger.info fn ->
-      "Patching config for #{inspect app}, #{inspect key}"
-    end
+    Logger.info(fn ->
+      "Patching config for #{inspect(app)}, #{inspect(key)}"
+    end)
 
     Application.put_env(app, key, new, persistent: true)
   end
+
   defp apply([app, root_key | deep_keys]) do
     new_root =
       app

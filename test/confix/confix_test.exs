@@ -70,19 +70,25 @@ defmodule ConfixTest do
       System.put_env("EXISTING_ENV_VAR_2", "B")
 
       assert Confix.parse({:system, ["NON_EXISTING_ENV_VAR_1", "NON_EXISTING_ENV_VAR_2"]}) == nil
-      assert Confix.parse({:system, [
-        "NON_EXISTING_ENV_VAR_1",
-        "EXISTING_ENV_VAR_1",
-        "EXISTING_ENV_VAR_2"
-      ]}) == "A"
+
+      assert Confix.parse(
+               {:system,
+                [
+                  "NON_EXISTING_ENV_VAR_1",
+                  "EXISTING_ENV_VAR_1",
+                  "EXISTING_ENV_VAR_2"
+                ]}
+             ) == "A"
     end
 
     test "parses system tuples with a default" do
       System.put_env("EXISTING_ENV_VAR", "value")
+
       assert Confix.parse({:system, "EXISTING_ENV_VAR", default: "default value"}) ==
-        "value"
+               "value"
+
       assert Confix.parse({:system, "NON_EXISTING_ENV_VAR", default: "default value"}) ==
-        "default value"
+               "default value"
     end
 
     test "parses boolean system tuples" do

@@ -78,7 +78,8 @@ defmodule Confix do
       Gets config for this module using `Confix` or return nil if missing.
       """
       def config(key_or_keys)
-      def config(key) when not(is_list(key)), do: config([key])
+      def config(key) when not is_list(key), do: config([key])
+
       def config(keys) do
         Confix.get_in([__MODULE__] ++ keys)
       end
@@ -128,8 +129,9 @@ defmodule Confix do
     case Keyword.fetch(opts, :app) do
       {:ok, app_name} ->
         app_name
+
       :error ->
-        Application.get_env(:confix, :base_app, Mix.Project.config[:app])
+        Application.get_env(:confix, :base_app, Mix.Project.config()[:app])
     end
   end
 
@@ -158,6 +160,7 @@ defmodule Confix do
 
   """
   def get_in(keys, opts \\ [])
+
   def get_in([root_key | deep_keys], opts) do
     opts
     |> get_app_name
@@ -185,6 +188,7 @@ defmodule Confix do
 
   """
   def parse({:system, env}), do: parse({:system, env, []})
+
   def parse({:system, env, opts}) do
     type = Keyword.get(opts, :type)
     default = Keyword.get(opts, :default)
@@ -194,9 +198,11 @@ defmodule Confix do
     |> apply_type(type)
     |> apply_default(default)
   end
+
   def parse(value), do: value
 
   defp get_env(env) when is_binary(env), do: System.get_env(env)
+
   defp get_env(envs) when is_list(envs) do
     Enum.find_value(envs, &get_env/1)
   end
