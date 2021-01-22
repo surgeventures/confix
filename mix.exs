@@ -54,7 +54,7 @@ defmodule Confix.Mixfile do
 
   defp deps do
     [
-      {:credo, "~> 0.8.1", only: [:dev, :test]},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:excoveralls, "~> 0.7", only: :test}
     ]
