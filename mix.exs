@@ -25,11 +25,10 @@ defmodule Confix.Mixfile do
 
   defp package do
     [
-      maintainers: ["Karol Słuszniak"],
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/surgeventures/confix",
-        "Shedul" => "https://www.shedul.com"
+        "Fresha" => "https://www.fresha.com"
       },
       files: ~w(mix.exs lib LICENSE.md README.md)
     ]
