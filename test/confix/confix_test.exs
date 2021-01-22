@@ -33,6 +33,10 @@ defmodule ConfixTest do
         Confix.get!(:flat_config_key_missing)
       end
     end
+
+    test "doesn't raise for false" do
+      assert Confix.get!(:flat_config_key_false) == false
+    end
   end
 
   describe "get_in/2" do

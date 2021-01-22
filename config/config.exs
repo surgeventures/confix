@@ -17,5 +17,6 @@ if Mix.env() == :test do
     system_key_with_integer_type: {:system, "INTEGER_ENV_VAR", type: :integer}
 
   config :confix,
-    flat_config_key: "flat value"
+    flat_config_key: "flat value",
+    flat_config_key_false: false
 end
