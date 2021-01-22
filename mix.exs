@@ -12,12 +12,8 @@ defmodule Confix.Mixfile do
       deps: deps(),
       package: package(),
       aliases: aliases(),
-      test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        check: :test,
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.html": :test
+        check: :test
       ],
       name: "Confix",
       description: "Read, parse and patch Elixir application's configuration",
@@ -55,8 +51,7 @@ defmodule Confix.Mixfile do
   defp deps do
     [
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.23", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.13", only: :test}
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false}
     ]
   end
 

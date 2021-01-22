@@ -27,9 +27,6 @@ jobs:
             otp: 21.3.8.16
           - elixir: 1.11.2
             otp: 23.0.2
-    env:
-      MIX_ENV: test
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Install Dependencies
@@ -37,7 +34,7 @@ jobs:
           mix local.rebar --force
           mix local.hex --force
           mix deps.get
-      - run: mix coveralls.github
+      - run: mix test
 
   mix_credo:
     name: Run credo
