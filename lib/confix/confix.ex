@@ -122,7 +122,10 @@ defmodule Confix do
   Same as `get/2` but raises `Confix.KeyError` if config is missing.
   """
   def get!(key, opts \\ []) do
-    get(key, opts) || raise(KeyError, key_or_keys: key)
+    case get(key, opts) do
+      nil -> raise(KeyError, key_or_keys: key)
+      value -> value
+    end
   end
 
   defp get_app_name(opts) do
