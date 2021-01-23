@@ -16,7 +16,7 @@ Add `confix` as a dependency to your project in `mix.exs`:
 
 ```elixir
 defp deps do
-  [{:confix, "~> x.x.x"}]
+  [{:confix, "~> 0.4"}]
 end
 ```
 
