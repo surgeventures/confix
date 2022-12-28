@@ -1,73 +1,14 @@
 defmodule Confix do
+  @external_resource "README.md"
+
   @moduledoc """
   Reads and parses the application's Mix config.
 
-  ## Usage
-
-  In order to get values, you may first add dynamic configuration to `config/prod.exs`:
-
-      config :confix,
-        base_app: :my_project # defaults to Mix app, so it's usually not needed
-
-      config :my_project,
-        feature_x_enabled: {:system, "FEATURE_X_ENABLED", type: :boolean, default: false}
-
-      config :my_project, MyProject.Web.Endpoint,
-        pubsub: [url: {:system, "REDIS_URL"}]
-
-  You may get these values in your own code:
-
-      iex> Confix.get(:feature_x_enabled)
-      false
-      iex> System.put_env("FEATURE_X_ENABLED", "1")
-      :ok
-      iex> Confix.get(:feature_x_enabled)
-      true
-      iex> System.put_env("REDIS_URL", "redis://localhost:6379")
-      :ok
-      iex> Confix.get_in(MyProject.Web.Endpoint, [:pubsub, :url])
-      "redis://localhost:6379"
-
-  You may also want to parse arbitrary configuration that doesn't come from Mix:
-
-      iex> System.put_env("ADAPTER_URL", "http://example.com")
-      :ok
-      iex> Confix.parse({:system, "ADAPTER_URL"})
-      "http://example.com"
-      iex> Confix.deep_parse(adapter: [url: {:system, "ADAPTER_URL"}])
-      [adapter: [url: "http://example.com"]]
-
-  Sometimes however the place where you'd like system tuples to be read lies outside your own code
-  and in 3rd party applications that don't natively support them. That could be (and actually is)
-  the case of `MyProject.Web.Endpoint` on examples above - the Redis adapter for Phoenix PubSub
-  doesn't properly parse the system tuples. In such cases, 3rd party config can be easily patched
-  with `Confix.Application`.
-
-  ## Usage in modules
-
-  You may also `use Confix` in your own modules in order to have quick means for getting config
-  associated with that particular module:
-
-      defmodule MyProject.MyHTTPClient do
-        use Confix
-
-        def call do
-          url = config!(:url)
-
-          # ...
-        end
-      end
-
-  ## Syntax
-
-  System tuples may have the following syntax:
-
-      {:system, "ENV_VAR"}
-      {:system, "ENV_VAR", default: "xyz"}
-      {:system, "ENV_VAR", type: :integer}
-      {:system, "ENV_VAR", type: :boolean, default: true}
-      {:system, ["ENV_VAR_1", "ENV_VAR_2"]}
-
+  #{
+    File.read!("README.md")
+    |> String.split(~r/<!-- MDOC !-->/)
+    |> Enum.fetch!(1)
+  }
   """
 
   alias __MODULE__.KeyError

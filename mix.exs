@@ -1,10 +1,13 @@
 defmodule Confix.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/surgeventures/confix"
+  @version "0.4.1"
+
   def project do
     [
       app: :confix,
-      version: "0.4.1",
+      version: @version,
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -13,24 +16,23 @@ defmodule Confix.Mixfile do
       package: package(),
       aliases: aliases(),
       preferred_cli_env: [
-        check: :test
+        check: :test,
+        docs: :docs
       ],
       name: "Confix",
-      description: "Read, parse and patch Elixir application's configuration",
-      source_url: "https://github.com/surgeventures/confix",
-      homepage_url: "https://github.com/surgeventures/confix",
-      docs: [main: "readme", extras: ["README.md"]]
+      docs: docs()
     ]
   end
 
   defp package do
     [
+      description: "Read, parse and patch Elixir application's configuration",
       licenses: ["MIT"],
+      files: ~w(mix.exs lib LICENSE.md README.md),
       links: %{
-        "GitHub" => "https://github.com/surgeventures/confix",
+        "GitHub" => @source_url,
         "Fresha" => "https://www.fresha.com"
       },
-      files: ~w(mix.exs lib LICENSE.md README.md)
     ]
   end
 
@@ -50,7 +52,7 @@ defmodule Confix.Mixfile do
   defp deps do
     [
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.23", only: :dev, runtime: false}
+      {:ex_doc, ">= 0.0.0", only: :docs, runtime: false}
     ]
   end
 
@@ -60,6 +62,21 @@ defmodule Confix.Mixfile do
       "compile --warnings-as-errors --force",
       "test",
       "credo --strict"
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [
+        "CHANGELOG.md": [title: "Changelog"],
+        "LICENSE.md": [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      homepage_url: @source_url,
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
 end
