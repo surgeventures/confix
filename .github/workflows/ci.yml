@@ -1,5 +1,9 @@
 name: CI
 
+
+env:
+  ImageOS: ubuntu22
+
 on:
   pull_request:
   push:
@@ -9,14 +13,15 @@ on:
 jobs:
   mix_test:
     name: Test (Erlang/OTP ${{matrix.otp}} | Elixir ${{matrix.elixir}})
-    runs-on: ubuntu-latest
+    runs-on:
+      - runs-on
+      - runner=2cpu-linux-x64
+      - "run-id=${{ github.run_id }}"
     container: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.11.6
     strategy:
       fail-fast: false
       matrix:
         include:
-          - elixir: 1.7.4
-            otp: 19.3.6.13
           - elixir: 1.8.2
             otp: 20.3.8.26
           - elixir: 1.9.4
@@ -38,7 +43,10 @@ jobs:
 
   mix_credo:
     name: Run credo
-    runs-on: ubuntu-latest
+    runs-on:
+      - runs-on
+      - runner=2cpu-linux-x64
+      - "run-id=${{ github.run_id }}"
     container: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.11.6
     strategy:
       matrix:
@@ -56,7 +64,10 @@ jobs:
 
   check_formatted:
     name: Check formatted
-    runs-on: ubuntu-latest
+    runs-on:
+      - runs-on
+      - runner=2cpu-linux-x64
+      - "run-id=${{ github.run_id }}"
     container: hexpm/elixir:${{ matrix.elixir }}-erlang-${{ matrix.otp }}-alpine-3.11.6
     strategy:
       matrix:
